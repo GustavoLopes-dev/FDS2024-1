@@ -40,7 +40,7 @@ public class Livro {
 
     @Override
     public String toString() {
-        return "Livro [id=" + id + ", titulo=" + titulo + ", autor=" + autor + ", ano=" + ano + "]";
+        return "Livro [id=" + id + ", titulo=" + titulo + ", autor=" + autor + ", ano=" + ano + "]\n";
     }
     
 }

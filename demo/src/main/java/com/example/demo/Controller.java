@@ -5,11 +5,13 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/biblioteca")
+@RequestMapping("")
 public class Controller {
     // Declaração da variável livros
     private LinkedList<Livro> livros;
@@ -23,7 +25,6 @@ public class Controller {
         livros.add(new Livro(140, "Aprendendo Outra coisa nova", "Huguinho Pato", 2023));
     }
 
-    
     @GetMapping("")
     @CrossOrigin(origins = "*")
     public String mensagemDeBemVindo() {
@@ -52,4 +53,21 @@ public class Controller {
                 .map(l -> l.getTitulo())
                 .toList();
     }
+
+    @GetMapping("/livrosPorAno")
+    @CrossOrigin(origins = "*")
+    public List<Livro> getListaLivrosAno(@RequestParam(value="ano")int ano) {
+        return livros.stream()
+                .filter(livro -> livro.getAno() == (ano))
+                .toList();
+    }
+
+    @GetMapping("/desatualizados/{ano}")
+    @CrossOrigin(origins = "*")
+    public List<Livro> getListaDesatualizado(@PathVariable int ano) {
+        return livros.stream()
+                .filter(livro -> livro.getAno() < (ano))
+                .toList();
+    }
+
 }
