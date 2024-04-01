@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,25 +16,40 @@ public class Controller {
 
     public Controller() {
         livros = new LinkedList<>();
-        livros.add(new Livro(1, "O Senhor dos Anéis", "J.R.R. Tolkien", 1954));
-        livros.add(new Livro(2, "Harry Potter e a Pedra Filosofal", "J.K. Rowling", 1997));
-        // Adicione mais livros conforme necessário
+        livros.add(new Livro(100, "Aprendendo Spring-Boot", "Huguinho Pato", 2020));
+        livros.add(new Livro(120, "Aprendendo Java", "Zezinho Pato", 2015));
+        livros.add(new Livro(140, "Aprendendo Outra coisa", "Luizinho Pato", 2023));
+        livros.add(new Livro(140, "Aprendendo Uma coisa nova", "Huguinho Pato", 2023));
+        livros.add(new Livro(140, "Aprendendo Outra coisa nova", "Huguinho Pato", 2023));
     }
 
-    // Este é um endpoint que retorna uma mensagem de boas-vindas
+    
     @GetMapping("")
     @CrossOrigin(origins = "*")
     public String mensagemDeBemVindo() {
-        return "Bem vindo a biblioteca central";
+        return "Bem vindo a biblioteca central!";
     }
 
-    // Este endpoint retorna uma lista de livros
     @GetMapping("/livros")
     @CrossOrigin(origins = "*")
-    public LinkedList<Livro> getLivros() {
-        // Aqui, idealmente, você retornaria uma lista de livros,
-        // mas neste exemplo, a variável 'livros' não está declarada
-        // Então, isso pode gerar um erro de compilação
+    public List<Livro> getListaLivros() {
         return livros;
+    }
+
+    @GetMapping("/autores")
+    @CrossOrigin(origins = "*")
+    public List<String> getListaAutores() {
+        return livros.stream()
+                .map(l -> l.getAutor())
+                .distinct()
+                .toList();
+    }
+
+    @GetMapping("/titulos")
+    @CrossOrigin(origins = "*")
+    public List<String> getListaTitulos() {
+        return livros.stream()
+                .map(l -> l.getTitulo())
+                .toList();
     }
 }
